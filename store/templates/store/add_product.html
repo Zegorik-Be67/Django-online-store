@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New</title>
+</head>
+<body>
+<h1>Добавить новый товар</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ products.as_p }}
+    <button type="submit">Добавить</button>
+    <a href="{% url 'store:store_list' %}">Вернуться на главную</a>
+</form>
+</body>
+</html>

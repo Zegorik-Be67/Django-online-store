@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Store</title>
+</head>
+<body>
+<a href="{% url 'store:add_product' %}">
+    <button>Добавить товар</button>
+</a>
+{% for s in store %}
+<ul>
+    <li>
+        {% if s.image %}
+            <img src="{{ s.image.url }}" alt="{{ s.title }}" width="200">
+        {% else %}
+            <p>Нет фото</p>
+        {% endif %}
+        <strong> {{ s.title }} </strong> : {{ s.whose }}
+        {{ s.date_create }}
+        {{ s.description }}
+        {{ s.price }}
+    </li>
+</ul>
+{% empty %}
+        <p>Пока товаров нет</p>
+{% endfor %}
+</body>
+</html>
