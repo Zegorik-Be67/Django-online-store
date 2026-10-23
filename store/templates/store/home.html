@@ -8,6 +8,16 @@
 <a href="{% url 'store:add_product' %}">
     <button>Добавить товар</button>
 </a>
+<form method="get" action="">
+    <select name="category" onchange="this.form.submit()">
+        <option value="">Все категории</option>
+        {% for c in categories %}
+            <option value="{{ c.id }}" {% if request.GET.category == c.id|stringformat:"s" %}selected{% endif %}>
+                {{ c.name }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
 {% for s in store %}
 <ul>
     <li>
