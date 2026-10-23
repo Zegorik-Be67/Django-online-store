@@ -8,6 +8,12 @@
 <a href="{% url 'store:add_product' %}">
     <button>Добавить товар</button>
 </a>
+
+<form method="get" action="">
+    <input type="search" name="search" value="{{ search }}" placeholder="Найти">
+    <button type="submit">Найти</button>
+</form>
+
 <form method="get" action="">
     <select name="category" onchange="this.form.submit()">
         <option value="">Все категории</option>
@@ -18,6 +24,7 @@
         {% endfor %}
     </select>
 </form>
+
 {% for s in store %}
 <ul>
     <li>
@@ -33,7 +40,7 @@
     </li>
 </ul>
 {% empty %}
-        <p>Пока товаров нет</p>
+        <p>Ничего не найдено</p>
 {% endfor %}
 </body>
 </html>
