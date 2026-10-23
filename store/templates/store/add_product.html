@@ -10,7 +10,9 @@
     {% csrf_token %}
     {{ products.as_p }}
     <button type="submit">Добавить</button>
-    <a href="{% url 'store:store_list' %}">Вернуться на главную</a>
 </form>
+<a href="{% url 'store:store_list' %}">
+    <button>Вернуться на главную</button>
+</a>
 </body>
 </html>

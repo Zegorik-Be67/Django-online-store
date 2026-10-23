@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.title }}</title>
+</head>
+<body>
+{% if store.image %}
+    <img src="{{ store.image.url }}" alt="{{ store.title }}" width="200">
+{% else %}
+    <p>Нет фото</p>
+{% endif %}<br>
+<h3><strong> {{ store.title }} </strong></h3><br>
+<strong>Производитель</strong>: {{ store.whose }} <br>
+<strong>Описание</strong>: {{ store.description }} <br>
+<strong>Цена</strong>: {{ store.price }}<br>
+<a href="{% url 'store:store_list' %}">
+    <button>Вернуться</button>
+</a>
+</body>
+</html>

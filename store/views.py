@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.db.models import Q
 from .models import Store, Category
@@ -27,3 +27,8 @@ def add_product(request):
         products = StoreForm()
 
     return render(request, 'store/add_product.html', {'products': products})
+
+def product_id(request, id):
+    store = get_object_or_404(Store, id=id)
+
+    return render(request, 'store/product.html', {'store': store})

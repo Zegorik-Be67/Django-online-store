@@ -32,11 +32,14 @@
             <img src="{{ s.image.url }}" alt="{{ s.title }}" width="200">
         {% else %}
             <p>Нет фото</p>
-        {% endif %}
-        <strong> {{ s.title }} </strong> : {{ s.whose }}
-        {{ s.date_create }}
-        {{ s.description }}
-        {{ s.price }}
+        {% endif %}<br>
+        <h3><strong> {{ s.title }} </strong></h3><br>
+        <strong>Производитель</strong>: {{ s.whose }} <br>
+        <strong>Описание</strong>: {{ s.description }} <br>
+        <strong>Цена</strong>: {{ s.price }} <br>
+        <a href="{% url 'store:product_id' id=s.id %}">
+            <button>Купить</button>
+        </a>
     </li>
 </ul>
 {% empty %}
