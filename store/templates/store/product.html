@@ -5,17 +5,18 @@
     <title>{{ product.title }}</title>
 </head>
 <body>
-{% if store.image %}
-    <img src="{{ store.image.url }}" alt="{{ store.title }}" width="200">
+{% if specific_product.image %}
+    <img src="{{ specific_product.image.url }}" alt="{{ specific_product.title }}" width="200">
 {% else %}
     <p>Нет фото</p>
-{% endif %}<br>
-<h3><strong> {{ store.title }} </strong></h3><br>
-<strong>Производитель</strong>: {{ store.whose }} <br>
-<strong>Описание</strong>: {{ store.description }} <br>
-<strong>Цена</strong>: {{ store.price }}<br>
-<a href="{% url 'store:store_list' %}">
+{% endif %}
+<h3><strong> {{ specific_product.title }} </strong></h3>
+<p><strong>Производитель</strong>: {{ specific_product.whose }} </p>
+<p><strong>Описание</strong>: {{ specific_product.description }} </p>
+<p><strong>Цена</strong>: {{ specific_product.price }}</p>
+<a href="{% url 'store:home' %}">
     <button>Вернуться</button>
 </a>
+<button>Купить</button>
 </body>
 </html>

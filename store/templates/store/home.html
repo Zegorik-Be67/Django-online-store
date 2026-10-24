@@ -5,6 +5,7 @@
     <title>Store</title>
 </head>
 <body>
+
 <a href="{% url 'store:add_product' %}">
     <button>Добавить товар</button>
 </a>
@@ -32,11 +33,11 @@
             <img src="{{ s.image.url }}" alt="{{ s.title }}" width="200">
         {% else %}
             <p>Нет фото</p>
-        {% endif %}<br>
-        <h3><strong> {{ s.title }} </strong></h3><br>
-        <strong>Производитель</strong>: {{ s.whose }} <br>
-        <strong>Описание</strong>: {{ s.description }} <br>
-        <strong>Цена</strong>: {{ s.price }} <br>
+        {% endif %}
+        <h3><strong> {{ s.title }} </strong></h3>
+        <p><strong>Производитель</strong>: {{ s.whose }} </p>
+        <p><strong>Описание</strong>: {{ s.description }} </p>
+        <p><strong>Цена</strong>: {{ s.price }} </p>
         <a href="{% url 'store:product_id' id=s.id %}">
             <button>Купить</button>
         </a>
