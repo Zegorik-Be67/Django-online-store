@@ -9,6 +9,23 @@
 <a href="{% url 'store:add_product' %}">
     <button>Добавить товар</button>
 </a>
+<a href="{% url 'store:favorites' %}">
+    <button>Избранные</button>
+</a>
+<a href="{% url 'store:cart' %}">
+    <button>Корзина</button>
+</a>
+{% if user.is_authenticated %}
+    <p>Привет, {{ user.username }}</p>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Выйти</button>
+    </form>
+{% else %}
+    <a href="{% url 'login' %}">
+        <button>Войти</button>
+    </a>
+{% endif %}
 
 <form method="get" action="">
     <input type="search" name="search" value="{{ search }}" placeholder="Найти">
@@ -46,5 +63,6 @@
 {% empty %}
         <p>Ничего не найдено</p>
 {% endfor %}
+
 </body>
 </html>

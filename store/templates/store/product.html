@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ product.title }}</title>
+    <title>{{ specific_product.title }}</title>
 </head>
 <body>
+
 {% if specific_product.image %}
     <img src="{{ specific_product.image.url }}" alt="{{ specific_product.title }}" width="200">
 {% else %}
@@ -17,6 +18,22 @@
 <a href="{% url 'store:home' %}">
     <button>Вернуться</button>
 </a>
-<button>Купить</button>
+
+<a href="{% url 'store:add_to_cart' product_id=specific_product.id %}">
+    <button>Добавить в корзину</button>
+</a>
+<a href="{% url 'store:add_to_favorite' product_id=specific_product.id %}">
+    <button>Добавить в избранное</button>
+</a>
+
+{% if recent_product %}
+    <ul>
+        {% for p in recent_product %}
+            <li>
+                <p>{{ p.title }} - {{ p.price }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 </body>
 </html>

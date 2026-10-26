@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Корзина</h2>
+{% if products %}
+    <ul>
+        {% for p in products %}
+            <li>
+                {{ p.title }} - {{ p.price }} руб.
+                <a href="{% url 'store:remove_cart' product_id=p.id %}">
+                    <button>Удалить</button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <p>Итого: {{ total_price }} руб.</p>
+{% else %}
+    <p>Корзина пуста</p>
+{% endif %}
+<a href="{% url 'store:home' %}">
+    <button>Вернуться</button>
+</a>
+</body>
+</html>

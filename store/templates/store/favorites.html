@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if favorites %}
+    <ul>
+        {% for f in favorites %}
+            <li>
+                {{ f.title }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<a href="{% url 'store:home' %}">
+    <button>Вернуться</button>
+</a>
+</body>
+</html>
