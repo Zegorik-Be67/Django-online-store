@@ -21,6 +21,9 @@
 {% else %}
     <p>Корзина пуста</p>
 {% endif %}
+<a href="{% url 'store:order' %}">
+    <button>Оформить заказ</button>
+</a>
 <a href="{% url 'store:home' %}">
     <button>Вернуться</button>
 </a>

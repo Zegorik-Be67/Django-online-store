@@ -25,6 +25,21 @@
 <a href="{% url 'store:add_to_favorite' product_id=specific_product.id %}">
     <button>Добавить в избранное</button>
 </a>
+<h3>Отзывы</h3>
+{% for r in reviews %}
+<div>
+    <strong>{{ r.user.username }}</strong>
+    <p>{{ r.review }}</p>
+</div>
+{% empty %}
+    <p>Пока что отзывов нет</p>
+{% endfor %}
+<h3>Оставить отзыв</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+</form>
 
 {% if recent_product %}
     <ul>

@@ -3,13 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.urls import reverse
 from django.db.models import Q
-from .models import Store, Category
-from .forms import NewProduct, RegistrationForm
+from .models import Store, Category, Order, OrderItem, Review
+from .forms import NewProduct, RegistrationForm, ReviewForm
+
 
 # The main page of the store
 def home(request):
     categories = Category.objects.all()
-    store = Store.objects.all()
+    store = Store.objects.all().order_by('id')
     category_id = request.GET.get('category')
     if category_id:
         store = store.filter(category__id=category_id)
@@ -31,6 +32,7 @@ def add_product(request):
     return render(request, 'store/add_product.html', {'products': products})
 
 # The page for a specific product
+@login_required
 def product_id(request, id):
     specific_product = get_object_or_404(Store, id=id)
 
@@ -41,7 +43,19 @@ def product_id(request, id):
     request.session['revent_product'] = recent_product[:5]
     recent_product = Store.objects.filter(id__in=recent_product).exclude(id=id)
 
-    return render(request, 'store/product.html', {'specific_product': specific_product, 'recent_product': recent_product})
+    reviews = Review.objects.filter(product=specific_product)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = specific_product
+            review.user = request.user
+            review.save()
+            return redirect('store:product_id', id=specific_product.id)
+    else:
+        form = ReviewForm()
+
+    return render(request, 'store/product.html', {'specific_product': specific_product, 'recent_product': recent_product, 'reviews': reviews, 'form': form})
 
 @login_required
 def add_to_cart(request, product_id):
@@ -96,3 +110,21 @@ def registration(request):
         form = RegistrationForm()
 
     return render(request, 'registration/register.html', {'form': form})
+
+@login_required
+def make_order(request):
+    cart_ids = request.session.get('cart', [])
+    if not cart_ids:
+        return redirect('store:cart_view')
+    products = Store.objects.filter(id__in=cart_ids)
+    total_price = sum(p.price for p in products)
+    order = Order.objects.create(user=request.user, total_sum=total_price)
+    items_to_create = [
+        OrderItem(id_order=order, product=p, quantity=1)
+        for p in products
+    ]
+    OrderItem.objects.bulk_create(items_to_create)
+    request.session['cart'] = []
+    request.session.modified = True
+
+    return redirect('store:cart')
